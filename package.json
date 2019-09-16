@@ -1,0 +1,30 @@
+{
+  "name": "webpack-cache-scripts-to-local",
+  "version": "1.0.0",
+  "description": "Apply localStorage cache JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hubvue/webpack-cache-scripts-to-local.git"
+  },
+  "keywords": [
+    "webpack",
+    "localStorage",
+    "IndexedDB",
+    "WebSQL",
+    "cache",
+    "cache javascript"
+  ],
+  "author": "wangchong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hubvue/webpack-cache-scripts-to-local/issues"
+  },
+  "homepage": "https://github.com/hubvue/webpack-cache-scripts-to-local#readme",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.3"
+  }
+}
