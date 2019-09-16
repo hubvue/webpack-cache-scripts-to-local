@@ -1,9 +1,9 @@
 const cheerio = require('cheerio')
 const pluginName = 'WebpackCacheScriptsToLocal'
 const DRIVER_NAME = {
-  store: 'localforage.LOCALSTORAGE',
+  localStorage: 'localforage.LOCALSTORAGE',
   indexedDB: 'localforage.INDEXEDDB',
-  WebSQL: 'localforage.WEBSQL'
+  webSQL: 'localforage.WEBSQL'
 }
 const DEFAILT_DRIVERNAME =
   '[localforage.INDEXEDDB,localforage.LOCALSTORAGE, localforage.WEBSQL]'
