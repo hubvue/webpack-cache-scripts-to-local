@@ -2,6 +2,11 @@
 
 Apply localStorage cache JavaScript file
 
+**Before**
+![](https://s33.aconvert.com/convert/p3r68-cdx67/calqr-8vypo.gif)
+**After**
+![](https://s33.aconvert.com/convert/p3r68-cdx67/izxro-ykpud.gif)
+
 ## webpack version
 
 4.0
@@ -21,7 +26,8 @@ module.exports = {
     new WebpackCacheScriptsToLocal({
       name: 'test',
       separator: '-',
-      driverName: ['indexedDB', 'webSQL', 'localStorage']
+      driverName: ['indexedDB', 'webSQL', 'localStorage'],
+      chunks: ['main']
     })
   ]
 }
@@ -70,6 +76,12 @@ new WebpackCacheScriptsToLocal({
   driverName: ['indexedDB', 'webSQL', 'localStorage']
 })
 ```
+
+### chunks
+
+You need cached chunk packages,local caching can be done according to the chunks you pack.
+
+This is default value all chunks
 
 ## Author
 

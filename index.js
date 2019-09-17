@@ -12,13 +12,14 @@ class WebpackCacheScriptsToLocal {
   constructor(options = {}) {
     this.name = options.name ? options.name : 'store'
     this.separator = options.separator ? options.separator : '-'
+    this.chunks = options.chunks ? options.chunks : []
     if (!options.driverName) {
       this.driverName = DEFAILT_DRIVERNAME
     } else {
       this.driverName = Array.isArray(options.driverName)
         ? `[${options.driverName.map(driverName => {
-            return DRIVER_NAME[driverName]
-          })}]`
+          return DRIVER_NAME[driverName]
+        })}]`
         : DRIVER_NAME[options.driverName]
     }
   }
@@ -42,13 +43,17 @@ class WebpackCacheScriptsToLocal {
    * sequencing files into key-value map
    * @param {*} scripts
    */
-  serializeJs(scripts) {
-    const jsMap = {}
-    scripts.forEach(js => {
-      const [name] = js.split(this.separator)
-      jsMap[name] = js
+  serializeJs(chunks) {
+    const chunkMap = {}
+    if (this.chunks.length === 0) {
+      this.chunks === Object.keys(chunks)
+    }
+    Object.keys(chunks).forEach(chunk => {
+      if (this.chunks.includes(chunk)) {
+        chunkMap[chunk] = chunks[chunk].entry
+      }
     })
-    return jsMap
+    return chunkMap
   }
   /**
    * add javascript to html
@@ -56,10 +61,17 @@ class WebpackCacheScriptsToLocal {
    */
   appendHtml(html) {
     const $ = cheerio.load(html)
-    $('script').remove()
     this.loadLocalForage($)
     return scripts => {
-      $('head').append(this.jsTemplate(scripts))
+      Object.keys(scripts).forEach(script => {
+        $(`[src="${scripts[script]}"]`).remove()
+      })
+      const firstScript = $('body script')[0]
+      if (firstScript) {
+        $(firstScript).before(this.jsTemplate(scripts))
+      } else {
+        $('body').append(this.jsTemplate(scripts))
+      }
       return $.html()
     }
   }
@@ -74,7 +86,7 @@ class WebpackCacheScriptsToLocal {
       })
       store.setDriver(${this.driverName})
       const scriptsMap = ${JSON.stringify(scripts)}
-      async function loadJS(assets) {
+      function loadJS(assets) {
         Object.keys(assets).forEach( async key => {
           try {
               const js = await store.getItem(key)
@@ -105,13 +117,13 @@ class WebpackCacheScriptsToLocal {
         pluginName,
         htmlPluginData => {
           const _html = htmlPluginData.html
-          const { js: scripts } = htmlPluginData.assets
+          const { chunks } = htmlPluginData.assets
           const appendHead = this.appendHtml(_html)
           const localAssets = this.compose(
             appendHead.bind(this),
             this.serializeJs.bind(this)
           )
-          const result = localAssets(scripts)
+          const result = localAssets(chunks)
           htmlPluginData.html = result
         }
       )

@@ -24,7 +24,8 @@
     "url": "https://github.com/hubvue/webpack-cache-scripts-to-local/issues"
   },
   "homepage": "https://github.com/hubvue/webpack-cache-scripts-to-local#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "cheerio": "^1.0.0-rc.3"
   }
 }
