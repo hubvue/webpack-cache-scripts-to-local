@@ -1,6 +1,6 @@
 {
   "name": "webpack-cache-scripts-to-local",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Apply localStorage cache JavaScript",
   "main": "index.js",
   "scripts": {
